@@ -348,6 +348,31 @@ if (!Global.isLocal && Global.name) {
 					'justify-content' : [],
 					'order' : []
 				},
+				'grid' : {
+					'index' : ['网格布局(Grid Layout)','其它网格布局属性'],
+					'grid' : [],
+					'grid-template' : [],
+					'grid-template-rows' : [],
+					'grid-template-columns' : [],
+					'grid-template-areas' : [],
+					'grid-gap' : [],
+					'grid-row-gap' : [],
+					'grid-column-gap' : [],
+					'grid-auto-rows' : [],
+					'grid-auto-columns' : [],
+					'grid-auto-flow' : [],
+					'grid-area' : [],
+					'grid-row' : [],
+					'grid-row-start' : [],
+					'grid-row-end' : [],
+					'grid-column' : [],
+					'grid-column-start' : [],
+					'grid-column-end' : []
+				},
+				'custom-properties' : {
+					'index' : ['自定义属性(Custom Properties)','其它自定义属性'],
+					'var' : ['var()']
+				},
 				'transform' : {
 					'index' : ['变换(Transform)','其它变换属性参考'],
 					'transform' : [],

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>var()</title>
+<meta name="description" content="CSS3参考手册自定义属性之: var()" />
+<meta name="keywords" content="var(), custom properties, 变量, 自定义属性, css3, css3参考手册" />
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+<meta name="robots" content="all" />
+<!--[if lte IE 8]>
+<script src="../../js/html5.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../skin/article.css" />
+</head>
+<body>
+<nav id="guide" class="g-mod">
+	<div class="from">
+		<a href="http://css.doyoe.com/" target="_blank">CSS3参考手册</a>
+		<span>&#187;</span>
+		<a href="../index.htm">属性列表</a>
+		<span>&#187;</span>
+		<a href="index.htm" id="category" rel="properties/custom-properties" name="var">自定义属性</a>
+		<span>&#187;</span>
+	</div>
+	<div class="to">
+		<span class="label">相关内容：</span>
+		<div class="g-combobox g-transition">
+			<a href="?" class="g-transition target">
+				<strong>其它自定义属性</strong>
+				<span>选择其它项<!--[if lte IE 7]><ins>IE7 and earlier, Get to die</ins><![endif]--></span>
+			</a>
+			<div class="g-transition list">
+				<ul>
+					<!-- 插入快速分类导航 -->
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+<header id="hd">
+	<section id="title" class="g-mod">
+		<h1 class="tit">var()</h1>
+		<ul class="info">
+			<li><strong>版本：CSS3</strong></li>
+			<li>媒体：视觉</li>
+		</ul>
+		<!-- 插入浏览器信息 -->
+	</section>
+</header>
+<section id="bd">
+	<section id="syntax" class="g-mod g-attr">
+		<h2 class="tit">语法：</h2>
+		<div class="cont">
+			<p><strong>var()</strong>：var( &lt;custom-property-name&gt; [, &lt;declaration-value&gt; ]? )</p>
+			<p><strong>适用于</strong>：所有元素</p>
+			<p><strong>继承性</strong>：无</p>
+		</div>
+	</section>
+	<section id="value" class="g-mod g-attr">
+		<h2 class="tit">取值：</h2>
+		<div class="cont">
+			<dl>
+				<dt>&lt;custom-property-name&gt;：</dt>
+				<dd>自定义属性名，以 -- 开头。</dd>
+				<dt>&lt;declaration-value&gt;：</dt>
+				<dd>后备值（fallback value），当自定义属性无效或未定义时使用。</dd>
+			</dl>
+		</div>
+	</section>
+	<section id="intro" class="g-mod g-attr">
+		<h2 class="tit">说明：</h2>
+		<div class="cont">
+			<strong>使用自定义属性（变量）。</strong>
+			<ul>
+				<li>
+					<strong>示例：定义并使用变量</strong>
+					<div class="gquote">
+						<p class="gquote-tit"><strong>Code：</strong></p>
+						<blockquote class="gquote-cont"><code><xmp>:root {
+	--main-color: #06c;
+}
+.box {
+	color: var(--main-color);
+}</xmp></code></blockquote>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section id="compatible" class="g-mod g-attr">
+		<h2 class="tit">兼容性：</h2>
+		<div class="cont">
+			<ul class="support-type">
+				<li><span class="support">浅绿</span> = 支持</li>
+				<li><span class="unsupport">红色</span> = 不支持</li>
+				<li><span class="partsupport">粉色</span> = 部分支持</li>
+			</ul>
+			<!-- compatible:css-variables -->
+			<table class="g-data">
+				<thead>
+					<tr>
+						<th><span class="browser-ie">IE</span></th>
+						<th><span class="browser-edge">Edge</span></th>
+						<th><span class="browser-firefox">Firefox</span></th>
+						<th><span class="browser-chrome">Chrome</span></th>
+						<th><span class="browser-safari">Safari</span></th>
+						<th><span class="browser-opera">Opera</span></th>
+						<th><span class="browser-ios_saf">Safari<br>on<br>iOS</span></th>
+						<th><span class="browser-android">Android<br>Browser</span></th>
+						<th><span class="browser-bb">Blackberry<br>Browser</span></th>
+						<th><span class="browser-op_mob">Opera<br>Mobile</span></th>
+						<th><span class="browser-and_chr">Chrome<br>for<br>Android</span></th>
+						<th><span class="browser-and_ff">Firefox<br>for<br>Android</span></th>
+						<th><span class="browser-ie_mob">IE<br>Mobile</span></th>
+						<th><span class="browser-and_uc">UC<br>Browser<br>for<br>Android</span></th>
+						<th><span class="browser-samsung">Samsung<br>Internet</span></th>
+						<th><span class="browser-and_qq">QQ<br>Browser</span></th>
+						<th><span class="browser-baidu">Baidu<br>Browser</span></th>
+						<th><span class="browser-kaios">KaiOS<br>Browser</span></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="3" class="unsupport">5.5-11</td>
+						<td class="unsupport">12-14</td>
+						<td class="unsupport">2-30</td>
+						<td class="unsupport">4-47</td>
+						<td class="unsupport">3.1-9</td>
+						<td class="unsupport">9-34</td>
+						<td class="unsupport">3.2-9.2</td>
+						<td rowspan="3" class="unsupport">2.1-4.4.4</td>
+						<td rowspan="3" class="unsupport">7-10</td>
+						<td class="unsupport">10-12.1</td>
+						<td rowspan="3" class="support">143</td>
+						<td rowspan="3" class="support">146</td>
+						<td rowspan="3" class="unsupport">10-11</td>
+						<td rowspan="3" class="support">15.5</td>
+						<td class="unsupport">4</td>
+						<td rowspan="3" class="support">14.9</td>
+						<td rowspan="3" class="support">13.52</td>
+						<td rowspan="3" class="support">2.5+</td>
+					</tr>
+					<tr>
+						<td class="partsupport">15 <a href="#support2">#2</a></td>
+						<td rowspan="2" class="support">31+</td>
+						<td class="unsupport">48 <a href="#support1">#1</a></td>
+						<td class="partsupport">9.1 <a href="#support2">#2</a></td>
+						<td class="unsupport">35 <a href="#support1">#1</a></td>
+						<td class="partsupport">9.3 <a href="#support2">#2</a></td>
+						<td rowspan="2" class="support">80</td>
+						<td rowspan="2" class="support">5.0+</td>
+					</tr>
+					<tr>
+						<td class="support">16+</td>
+						<td class="support">49+</td>
+						<td class="support">10+</td>
+						<td class="support">36+</td>
+						<td class="support">10.0+</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- compatible:end -->
+		</div>
+	</section>
+	<section id="example" class="g-mod g-attr">
+		<h2 class="tit">示例：</h2>
+		<div class="cont">
+			<textarea cols="90" rows="10">
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>var()_CSS参考手册_web前端开发参考手册系列</title>
+<style>
+:root {
+	--main-bg: #f0f0f0;
+	--main-color: #333;
+	--accent-color: #007bff;
+}
+.box {
+	background-color: var(--main-bg);
+	color: var(--main-color);
+	padding: 20px;
+	border: 1px solid var(--accent-color);
+}
+</style>
+</head>
+<body>
+<h1>var()示例：</h1>
+<div class="box">
+	这是一段使用了CSS变量的文本。
+</div>
+</body>
+</html>
+			</textarea>
+			<p><input type="button" class="g-btn g-btn-sure" value="运行"></p>
+		</div>
+	</section>
+	<section id="editime" class="g-mod g-attr">
+		<h2 class="tit">本页最后更新时间：</h2>
+		<div class="cont">
+			2026.1.19
+		</div>
+	</section>
+</section>
+<footer id="ft">
+	<aside id="rights" class="g-mod">
+		<!-- 插入浏览器及版权信息 -->
+	</aside>
+</footer>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/inner.js"></script>
+</body>
+</html>
