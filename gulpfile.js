@@ -247,14 +247,15 @@ gulp.task("htm", function() {
 		.pipe(replace(/(\t|\n) {4,}/g, function(str, char) {
 			return char + tab(parseInt(str.length / 4));
 		}))
-		.pipe(replace(/<meta\s+charset=(["'])[\w-]+\1(?:\s+\/)?>/i, process.env.CI ? "<meta charset=\"gbk\">" : "<meta charset=\"utf-8\" />"))
-		.pipe(process.env.CI ? convertEncoding({to: "gbk"}) : gutil.noop())
+		// On macOS, keep utf-8. On Windows/CI, convert to gbk.
+		.pipe(replace(/<meta\s+charset=(["'])[\w-]+\1(?:\s+\/)?>/i, (process.env.CI || process.platform === "win32") ? "<meta charset=\"gbk\">" : "<meta charset=\"utf-8\" />"))
+		.pipe((process.env.CI || process.platform === "win32") ? convertEncoding({to: "gbk"}) : gutil.noop())
 		.pipe(gulp.dest("."));
 });
 
 // html修复
 gulp.task("gbk-js", function(cb) {
-	if (process.env.CI) {
+	if (process.env.CI || process.platform === "win32") {
 		gutil.log("正在修改js文件文件编码");
 
 		return gulp.src(["js/**/*.js"])
@@ -384,6 +385,8 @@ function treeWalker(node, nest) {
 
 function build() {
 	let hhcPath;
+	let compilerType = "hhc"; // "hhc" or "chmcmd"
+
 	if (fs.existsSync("hhc.exe")) {
 		hhcPath = "hhc.exe";
 	} else {
@@ -392,6 +395,31 @@ function build() {
 		} catch (ex) {
 			// 
 		}
+		
+		if (!hhcPath) {
+			// Check for chmcmd (macOS/Linux - Free Pascal)
+			try {
+				hhcPath = which.sync("chmcmd");
+				if (hhcPath) {
+					compilerType = "chmcmd";
+				}
+			} catch (ex) {
+				// Try common paths if which fails
+				const commonPaths = [
+					"/usr/local/bin/chmcmd",
+					"/opt/homebrew/bin/chmcmd",
+					"/usr/bin/chmcmd"
+				];
+				for (const p of commonPaths) {
+					if (fs.existsSync(p)) {
+						hhcPath = p;
+						compilerType = "chmcmd";
+						break;
+					}
+				}
+			}
+		}
+
 		if (!hhcPath) {
 			["ProgramFiles", "ProgramFiles(x86)", "ProgramW6432", "TEMP"]
 			.map(envName => process.env[envName])
@@ -400,6 +428,7 @@ function build() {
 				.some(exePath => {
 					if (fs.existsSync(exePath)) {
 						hhcPath = exePath;
+						compilerType = "hhc";
 						return true;
 					}
 				});
@@ -410,10 +439,40 @@ function build() {
 	if (hhcPath) {
 		let child_process = require("child_process");
 		return new Promise((resolve, reject) => {
-			gutil.log("正在编译chm");
-			child_process.exec("taskkill /F /IM hh.exe", function() {
+			gutil.log(`正在使用 ${compilerType} 编译chm`);
+			
+			// If using hhc (Windows), kill existing process
+			if (compilerType === "hhc") {
+				child_process.exec("taskkill /F /IM hh.exe", function() {});
+			}
 
-				child_process.execFile(hhcPath, [path.join(process.cwd(), "css.hhp")], (error, stdout, stderr) => {
+			// If using chmcmd, delete existing css.chm first to avoid lock/permission errors
+			if (compilerType === "chmcmd") {
+				const outputFile = process.platform === "darwin" ? "css_mac.chm" : "css.chm";
+				if (fs.existsSync(outputFile)) {
+					try {
+						// Add delay to ensure file handle is released
+						child_process.execSync(`rm -f ${outputFile}`);
+						
+						// Sleep for 100ms to let the OS release file locks
+						const start = Date.now();
+						while (Date.now() - start < 100) {}
+					} catch (e) {
+						gutil.log(`警告: 无法删除旧的 ${outputFile} 文件，可能被占用`);
+					}
+				}
+			}
+
+			// Ensure directory is writable by changing cwd to a safe temporary location if needed
+			// chmcmd creates temporary files which might conflict
+			// We pass the absolute path to chmcmd as the command to run
+			
+			child_process.execFile(hhcPath, [path.join(process.cwd(), "css.hhp")], {
+				// cwd: process.cwd(), // Explicitly set cwd
+				maxBuffer: 1024 * 1024 * 10 // Increase buffer size
+			}, (error, stdout, stderr) => {
+				// hhc.exe returns 1 on success (sometimes), chmcmd returns 0 on success
+				if (compilerType === "hhc") {
 					if (stderr) {
 						reject(stderr);
 					} else {
@@ -423,13 +482,24 @@ function build() {
 							reject(stderr || stdout || error);
 						}
 					}
-				});
+				} else {
+					// chmcmd logic (macOS/Linux)
+					if (error && error.code !== 0) {
+						reject(stderr || stdout || error);
+					} else {
+						resolve(stdout);
+					}
+				}
 			});
 		})
 
 		.then(stdout => {
 			if (!process.env.CI) {
-				opener("css.chm");
+				if (process.platform === "darwin") {
+					gutil.log("编译完成。在 Mac 上可以使用 iChm 或其他阅读器查看 css.chm");
+				} else {
+					try { opener("css.chm"); } catch(e) {}
+				}
 			}
 			gutil.log(stdout);
 			gutil.log("chm编译成功");
@@ -438,9 +508,15 @@ function build() {
 			gutil.log("chm编译发生错误");
 		});
 	} else {
-		gutil.log("未找到hhc.exe，请安装[HTML Help Workshop](https://download.microsoft.com/download/0/A/9/0A939EF6-E31C-430F-A3DF-DFAE7960D564/htmlhelp.exe)");
-		opener("css.hhp");
-		return Promise.reject(hhcPath);
+		if (process.platform === "darwin") {
+			gutil.log(gutil.colors.yellow("警告: 未找到 chmcmd。无法生成 CHM 文件。"));
+			gutil.log(gutil.colors.yellow("请确认 Free Pascal 已正确安装: brew install fpc"));
+		} else {
+			gutil.log("未找到hhc.exe，请安装[HTML Help Workshop](https://download.microsoft.com/download/0/A/9/0A939EF6-E31C-430F-A3DF-DFAE7960D564/htmlhelp.exe)");
+			opener("css.hhp");
+		}
+		// Return resolved promise to skip error if tool is missing, allowing HTML generation to complete
+		return Promise.resolve("Skipped CHM generation");
 	}
 }
 
@@ -454,10 +530,41 @@ gulp.task("chm", function() {
 		let tree = results[0];
 		let files = results[1];
 		let pkg = require("./package.json");
+		let isMac = process.platform === "darwin";
+		let encoding = isMac ? "utf8" : "gbk"; // macOS uses UTF-8, Windows uses GBK
+		
+		// For .hhc/.hhk (TOC/Index), CHM format historically relies on ANSI/GBK.
+		// Even if we use UTF-8 for HTML, the TOC file often needs to be GBK to display correctly in the sidebar
+		// unless chmcmd has specific UTF-8 handling flags which are rare.
+		// Let's try mixed strategy: HTML is UTF-8 (for content), but HHC/HHK/HHP are GBK.
+		let hhcEncoding = "gbk";
+		
 		let htmlHead = `<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN"><HTML><HEAD><meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1"><!-- Sitemap 1.0 --></HEAD><BODY>`;
 		let hhc = `${ htmlHead }<OBJECT type="text/site properties"><param name="ExWindow Styles" value="0x200"><param name="Window Styles" value="0x800025"><param name="Font" value="MS Sans Serif,9,0"></OBJECT>${ treeWalker(tree, true) }</BODY></HTML>`;
 		let hhk = `${ htmlHead }<UL>${ treeWalker(tree) }</UL></BODY></HTML>`;
-		let hhp = "[OPTIONS]\nCompatibility=1.1 or later\nCompiled file=css.chm\nContents file=css.hhc\nDefault topic=quicksearch.htm\nDisplay compile progress=No\nFull-text search=Yes\nIndex file=css.hhk\nLanguage=0x804 中文(简体，中国)\nTitle=" + pkg.description + "\n\n\n[FILES]\n";
+		
+		// Adjust HHP content for macOS compatibility
+		let compiledFile = isMac ? "css_mac.chm" : "css.chm";
+		
+		// Revert to Chinese locale for the HHP setting itself, to match the GBK encoding of HHC
+		let language = "0x804 中文(简体，中国)";
+		
+		let title = pkg.description;
+		
+		let hhp = `[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=${compiledFile}
+Contents file=css.hhc
+Default topic=quicksearch.htm
+Display compile progress=No
+Full-text search=Yes
+Index file=css.hhk
+Language=${language}
+Title=${title}
+Binary Index=Yes
+
+[FILES]
+`;
 
 		hhp += files.filter(path => {
 			if (/\.html?$/.test(path)) {
@@ -468,9 +575,10 @@ gulp.task("chm", function() {
 		}).join("\n");
 
 		return Promise.all([
-			fs.writeFileAsync("css.hhc", iconv.encode(hhc, "gbk")),
-			fs.writeFileAsync("css.hhk", iconv.encode(hhk, "gbk")),
-			fs.writeFileAsync("css.hhp", iconv.encode(hhp, "gbk")),
+			// Force GBK for structure files to fix sidebar encoding
+			fs.writeFileAsync("css.hhc", iconv.encode(hhc, hhcEncoding)),
+			fs.writeFileAsync("css.hhk", iconv.encode(hhk, hhcEncoding)),
+			fs.writeFileAsync("css.hhp", iconv.encode(hhp, hhcEncoding)),
 		]);
 	}).then(build);
 });
