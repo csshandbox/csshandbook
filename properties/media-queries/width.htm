@@ -139,13 +139,46 @@
 <title>media features width_CSS参考手册_web前端开发参考手册系列</title>
 <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-@media all and (min-width: 500px) and (max-width: 1000px){
-	body { color: #f00; }
+body {
+	font-family: sans-serif;
+	padding: 20px;
+	transition: background-color 0.3s;
+}
+.indicator {
+	padding: 20px;
+	border-radius: 5px;
+	background: #eee;
+	text-align: center;
+	font-weight: bold;
+	color: #333;
+}
+
+/* Mobile (< 600px) */
+@media (max-width: 599px) {
+	body { background-color: #ffebee; } /* Red tint */
+	.indicator::after { content: "Mobile View (< 600px)"; }
+	.indicator { background: #f44336; color: white; }
+}
+
+/* Tablet (600px - 900px) */
+@media (min-width: 600px) and (max-width: 900px) {
+	body { background-color: #e3f2fd; } /* Blue tint */
+	.indicator::after { content: "Tablet View (600px - 900px)"; }
+	.indicator { background: #2196f3; color: white; }
+}
+
+/* Desktop (> 900px) */
+@media (min-width: 901px) {
+	body { background-color: #e8f5e9; } /* Green tint */
+	.indicator::after { content: "Desktop View (> 900px)"; }
+	.indicator { background: #4caf50; color: white; }
 }
 </style>
 </head>
 <body>
-<div class="test">当页面可见宽度大于500px小于1000px时，本行文字显示为红色。试着调整你的viewport使得页面宽度介于这个区间以查看效果</div>
+<h1>Media Queries: width</h1>
+<div class="indicator">Current Layout: </div>
+<p>Resize the window to see the background color and label change.</p>
 </body>
 </html>
 			</textarea>

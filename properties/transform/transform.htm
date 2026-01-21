@@ -209,82 +209,92 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="utf-8" />
-<title>2D transform_CSS参考手册_web前端开发参考手册系列</title>
-<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+<title>transform_CSS参考手册_web前端开发参考手册系列</title>
 <style>
-h1{clear:both;padding-top:10px;font-size:16px;font-family:Arial;}
-.test{zoom:1;width:700px;margin:0;padding:0;list-style:none;}
-.test li{float:left;margin:20px 30px 0 0;border:1px solid #000;}
-.test li p{width:300px;height:100px;margin:0;background:#ddd;}
-.test .matrix{-moz-transform:matrix(0,1,1,1,10px,10px);-webkit-transform:matrix(0,1,1,1,10,10);-ms-transform:matrix(0,1,1,1,10,10);transform:matrix(0,1,1,1,10,10);}
-.test .translate p{-moz-transform:translate(5%,10px);-webkit-transform:translate(10px,10px);-ms-transform:translate(10px,10px);transform:translate(10px,10px);}
-.test .translate2 p{-moz-transform:translate(-10px,-10px);-webkit-transform:translate(-10px,-10px);-ms-transform:translate(-10px,-10px);transform:translate(-10px,-10px);}
-.test .translateX p{-moz-transform:translateX(20px);-webkit-transform:translateX(20px);-ms-transform:translateX(20px);transform:translateX(20px);}
-.test .translate3 p{-moz-transform:translate(20px);-webkit-transform:translate(20px);-ms-transform:translate(20px);transform:translate(20px);}
-.test .translateY p{-moz-transform:translateY(10px);-webkit-transform:translateY(10px);-ms-transform:translateY(10px);transform:translateY(10px);}
-.test .translate4 p{-moz-transform:translate(0,10px);-webkit-transform:translate(0,10px);-ms-transform:translate(0,10px);transform:translate(0,10px);}
-.test .rotate{-moz-transform:rotate(-5deg);-webkit-transform:rotate(-5deg);-ms-transform:rotate(-5deg);transform:rotate(-5deg);}
-.test .rotate2{-moz-transform:rotate(5deg);-webkit-transform:rotate(5deg);-ms-transform:rotate(5deg);transform:rotate(5deg);}
-.test .scale{-moz-transform:scale(.8);-webkit-transform:scale(.8);-ms-transform:scale(.8);transform:scale(.8);}
-.test .scale2{-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-ms-transform:scale(1.2);transform:scale(1.2);}
-.test .skew{-moz-transform:skew(-5deg);-webkit-transform:skew(-5deg);-ms-transform:skew(-5deg);transform:skew(-5deg);}
-.test .skew2{-moz-transform:skew(-5deg,-5deg);-webkit-transform:skew(-5deg,-5deg);-ms-transform:skew(-5deg,-5deg);transform:skew(-5deg,-5deg);}
+h1 { font-size: 16px; margin: 10px 0; clear: both; }
+.test {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+.test li {
+	float: left;
+	width: 120px;
+	height: 120px;
+	margin: 10px 20px 10px 0;
+	border: 1px solid #ccc;
+	background: #eee;
+	position: relative;
+}
+/* 参照物(虚线框) */
+.test li::before {
+	content: '';
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	border: 1px dashed #999;
+	z-index: 0;
+}
+.test li p {
+	width: 100%;
+	height: 100%;
+	background: rgba(6, 204, 204, 0.5);
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-size: 12px;
+	color: #fff;
+	position: relative;
+	z-index: 1;
+	transition: transform 0.3s;
+}
+
+/* 2D Transforms */
+.translate p { transform: translate(10px, 10px); }
+.rotate p { transform: rotate(15deg); }
+.scale p { transform: scale(0.8); }
+.skew p { transform: skew(-10deg); }
+.matrix p { transform: matrix(1, -0.2, 0, 1, 0, 0); }
+
+/* 3D Transforms */
+.test-3d { perspective: 500px; }
+.rotate3d p {
+	transform: rotate3d(1, 1, 0, 45deg);
+	background: rgba(255, 100, 100, 0.6);
+}
+.translate3d p {
+	transform: translate3d(10px, 10px, -50px);
+	background: rgba(255, 100, 100, 0.6);
+}
+
+/* Transform Origin */
+.origin-left p {
+	transform-origin: left top;
+	transform: rotate(15deg);
+}
 </style>
 </head>
 <body>
-<h1>矩阵变换：matrix()</h1>
+<h1>2D Transforms</h1>
 <ul class="test">
-	<li class="matrix">
-		<p>transform:matrix(0,1,1,1,10,10)</p>
-	</li>
+	<li class="translate"><p>translate(10px,10px)</p></li>
+	<li class="rotate"><p>rotate(15deg)</p></li>
+	<li class="scale"><p>scale(0.8)</p></li>
+	<li class="skew"><p>skew(-10deg)</p></li>
+	<li class="matrix"><p>matrix(...)</p></li>
 </ul>
-<h1>平移：translate(), translateX(), translateY()</h1>
-<ul class="test">
-	<li class="translate">
-		<p>transform:translate(5%,10px)</p>
-	</li>
-	<li class="translate2">
-		<p>transform:translate(-10px,-10px)</p>
-	</li>
-	<li class="translateX">
-		<p>transform:translateX(20px)</p>
-	</li>
-	<li class="translate3">
-		<p>transform:translate(20px)</p>
-	</li>
-	<li class="translateY">
-		<p>transform:translateY(10px)</p>
-	</li>
-	<li class="translate4">
-		<p>transform:translate(0,10px)</p>
-	</li>
+
+<h1>3D Transforms (perspective: 500px)</h1>
+<ul class="test test-3d">
+	<li class="rotate3d"><p>rotate3d(1,1,0,45deg)</p></li>
+	<li class="translate3d"><p>translate3d(..,-50px)</p></li>
 </ul>
-<h1>旋转：rotate()</h1>
+
+<h1>Transform Origin</h1>
 <ul class="test">
-	<li class="rotate">
-		<p>transform:rotate(-15deg)</p>
-	</li>
-	<li class="rotate2">
-		<p>transform:rotate(15deg)</p>
-	</li>
-</ul>
-<h1>缩放：scale()</h1>
-<ul class="test">
-	<li class="scale">
-		<p>transform:scale(.8)</p>
-	</li>
-	<li class="scale2">
-		<p>transform:scale(1.2)</p>
-	</li>
-</ul>
-<h1>扭曲：skew()</h1>
-<ul class="test">
-	<li class="skew">
-		<p>transform:skew(-5deg)</p>
-	</li>
-	<li class="skew2">
-		<p>transform:skew(-5deg,-5deg)</p>
-	</li>
+	<li class="origin-left"><p>origin: left top</p></li>
 </ul>
 </body>
 </html>

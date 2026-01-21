@@ -127,6 +127,43 @@
 			</ol>
 		</div>
 	</section>
+	<section id="example" class="g-mod g-attr">
+		<h2 class="tit">示例：</h2>
+		<div class="cont">
+			<textarea cols="90" rows="10">
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>text-underline-position_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+<style>
+.test { font-size: 24px; text-decoration: underline; margin-bottom: 20px; }
+.under { text-underline-position: under; }
+.left { text-underline-position: left; writing-mode: vertical-lr; height: 150px; border: 1px solid #ccc; }
+.right { text-underline-position: right; writing-mode: vertical-lr; height: 150px; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+<h1>text-underline-position 示例</h1>
+
+<h3>auto (默认)</h3>
+<div class="test">Typography Example</div>
+
+<h3>under (下划线位于基线下方)</h3>
+<div class="test under">Typography Example (Low)</div>
+
+<h3>Vertical Text (Left vs Right)</h3>
+<div style="display: flex; gap: 20px;">
+	<div class="test left">Left Position</div>
+	<div class="test right">Right Position</div>
+</div>
+</body>
+</html>
+			</textarea>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
+		</div>
+	</section>
 </section>
 <footer id="ft">
 	<aside id="rights" class="g-mod">

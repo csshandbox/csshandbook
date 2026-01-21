@@ -181,30 +181,39 @@ div {
 	height: 100px;
 	margin-top: 10px;
 	border: 1px solid #ddd;
+	font-size: 12px;
+	padding: 5px;
+	color: #fff;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
 .test {
 	background: linear-gradient(#fff, #333);
+	color: #333; text-shadow: none;
 }
 .test2 {
-	background: linear-gradient(#000, #f00 50%, #090);
+	background: linear-gradient(to right, #000, #f00 50%, #090);
 }
 .test3 {
-	background: linear-gradient(0deg, #000 20%, #f00 50%, #090 80%);
+	background: linear-gradient(135deg, #000 20%, #f00 50%, #090 80%);
 }
+/* Hard Stops */
 .test4 {
-	background: linear-gradient(45deg, #000, #f00 50%, #090);
+	background: linear-gradient(to right, red 50%, blue 50%);
 }
+/* Stripes */
 .test5 {
-	background: linear-gradient(to top right, #000, #f00 50%, #090);
+	background: linear-gradient(45deg, #f06 25%, transparent 25%, transparent 50%, #f06 50%, #f06 75%, transparent 75%, transparent);
+	background-size: 50px 50px;
+	color: #333; text-shadow: none;
 }
 </style>
 </head>
 <body>
-<div class="test"></div>
-<div class="test2"></div>
-<div class="test3"></div>
-<div class="test4"></div>
-<div class="test5"></div>
+<div class="test">默认 (Top to Bottom)</div>
+<div class="test2">to right</div>
+<div class="test3">135deg</div>
+<div class="test4">Hard Stops (50%)</div>
+<div class="test5">Stripes (Pattern)</div>
 </body>
 </html>
 			</textarea>

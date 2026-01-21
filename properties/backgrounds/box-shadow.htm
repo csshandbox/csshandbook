@@ -145,41 +145,63 @@
 <title>box-shadow_CSS参考手册_web前端开发参考手册系列</title>
 <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-.test li {
-	margin-top: 20px;
-	list-style: none;
-	width: 400px;
-	padding: 10px;
-	background: #eee;
+.container {
+	display: flex;
+	gap: 20px;
+	padding: 20px;
+	flex-wrap: wrap;
 }
-.test .outset {
-	box-shadow: 5px 5px rgba(0, 0, 0, .6);
+.box {
+	width: 150px;
+	height: 100px;
+	background: #fff;
+	border: 1px solid #eee;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-size: 14px;
+	color: #333;
 }
-.test .outset-blur {
-	box-shadow: 5px 5px 5px rgba(0, 0, 0, .6);
+
+/* 1. Basic Shadow */
+.shadow-1 {
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-.test .outset-extension {
-	box-shadow: 5px 5px 5px 10px rgba(0, 0, 0, .6);
+
+/* 2. Deep Shadow (Card Style) */
+.shadow-2 {
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
-.test .inset {
-	box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, .6) inset;
+
+/* 3. Inset Shadow */
+.shadow-3 {
+	box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
-.test .multiple-shadow {
-	box-shadow:
-		0 0 5px 3px rgba(255, 0, 0, .6),
-		0 0 5px 6px rgba(0, 182, 0, .6),
-		0 0 5px 10px rgba(255, 255, 0, .6);
+
+/* 4. Neon Glow */
+.shadow-4 {
+	border: none;
+	background: #333;
+	color: #fff;
+	box-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+}
+
+/* 5. One-sided */
+.shadow-5 {
+	box-shadow: 10px 0 5px -2px #888;
 }
 </style>
 </head>
 <body>
-<ul class="test">
-	<li class="outset">外阴影常规效果<br />box-shadow:5px 5px rgba(0,0,0,.6);</li>
-	<li class="outset-blur">外阴影模糊效果<br />box-shadow:5px 5px 5px rgba(0,0,0,.6);</li>
-	<li class="outset-extension">外阴影模糊外延效果<br />box-shadow:5px 5px 5px 10px rgba(0,0,0,.6);</li>
-	<li class="inset">内阴影效果<br />box-shadow:2px 2px 5px 1px rgba(0,0,0,.6) inset;</li>
-	<li class="multiple-shadow">外阴影模糊效果<br />box-shadow:5px 5px 5px rgba(0,0,0,.6);</li>
-</ul>
+<h1>box-shadow 示例</h1>
+<div class="container">
+	<div class="box shadow-1">Basic Drop</div>
+	<div class="box shadow-2">Material Card</div>
+	<div class="box shadow-3">Inset</div>
+	<div class="box shadow-4">Neon Glow</div>
+	<div class="box shadow-5">Right Side</div>
+</div>
 </body>
 </html>
 			</textarea>

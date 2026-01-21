@@ -171,24 +171,58 @@
 <head>
 <meta charset="utf-8" />
 <title>var()_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
 :root {
-	--main-bg: #f0f0f0;
-	--main-color: #333;
-	--accent-color: #007bff;
+	--primary-color: #007bff;
+	--text-color: #333;
+	--bg-color: #f4f4f4;
 }
-.box {
-	background-color: var(--main-bg);
-	color: var(--main-color);
+
+.container {
+	background-color: var(--bg-color);
 	padding: 20px;
-	border: 1px solid var(--accent-color);
+	border: 1px solid #ccc;
+}
+
+.box {
+	color: var(--text-color);
+	border: 2px solid var(--primary-color);
+	padding: 10px;
+	margin-bottom: 10px;
+	background: #fff;
+}
+
+/* Fallback Example */
+.box-fallback {
+	/* var(--unknown) is not defined, so it uses 'red' */
+	color: var(--unknown, red);
+	border: 2px solid var(--unknown, red);
+}
+
+/* Local Scope */
+.local-scope {
+	--primary-color: #28a745; /* Override global */
+	border-color: var(--primary-color);
+	color: var(--primary-color);
 }
 </style>
 </head>
 <body>
-<h1>var()示例：</h1>
-<div class="box">
-	这是一段使用了CSS变量的文本。
+<h1>var() Custom Properties</h1>
+
+<div class="container">
+	<div class="box">
+		Global Variables (Blue/Dark)
+	</div>
+
+	<div class="box local-scope">
+		Local Scope Override (Green)
+	</div>
+
+	<div class="box box-fallback">
+		Fallback Value (Red)
+	</div>
 </div>
 </body>
 </html>

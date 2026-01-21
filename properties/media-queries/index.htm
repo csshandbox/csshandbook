@@ -43,7 +43,8 @@
 			<li>CSS媒体查询</li>
 		</ul>
 		<!-- 插入浏览器信息 -->
-	</section>
+
+</section>
 </header>
 <section id="bd">
 	<section id="syntax" class="g-mod g-attr">
@@ -223,6 +224,75 @@
 			<ol class="support-info">
 				<li id="support1">不支持嵌套媒体查询。</li>
 			</ol>
+		</div>
+	</section>
+	<section id="example" class="g-mod g-attr">
+		<h2 class="tit">示例：</h2>
+		<div class="cont">
+			<textarea cols="90" rows="10">
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>Media Queries_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+<style>
+body {
+	background-color: #eee;
+	color: #333;
+	padding: 20px;
+	transition: background-color 0.3s ease;
+}
+
+/* 默认样式 (移动优先或基本样式) */
+.info {
+	padding: 20px;
+	border: 1px solid #ccc;
+	background: #fff;
+}
+
+/* 当视口宽度至少为 600px 时应用 */
+@media screen and (min-width: 600px) {
+	body {
+		background-color: #e0f7fa; /* 浅蓝色背景 */
+	}
+	.info {
+		border-color: #00acc1;
+		color: #006064;
+	}
+	.info::after {
+		content: " (Current: Wide Screen)";
+		font-weight: bold;
+	}
+}
+
+/* 当视口宽度小于 600px 时应用 */
+@media screen and (max-width: 599px) {
+	body {
+		background-color: #ffe0b2; /* 浅橙色背景 */
+	}
+	.info {
+		border-color: #fb8c00;
+		color: #e65100;
+	}
+	.info::after {
+		content: " (Current: Narrow Screen)";
+		font-weight: bold;
+	}
+}
+</style>
+</head>
+<body>
+<h1>Media Queries Demo</h1>
+<p>Resize the window or the preview area to see the changes.</p>
+
+<div class="info">
+	Resize me!
+</div>
+</body>
+</html>
+			</textarea>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
 		</div>
 	</section>
 </section>

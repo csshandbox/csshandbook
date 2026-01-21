@@ -161,13 +161,45 @@
 <title>box-sizing_CSS参考手册_web前端开发参考手册系列</title>
 <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-.test{width:200px;height:70px;padding:10px;border:15px solid #999;-moz-box-sizing:content-box;-ms-box-sizing:content-box;box-sizing:content-box;background:#eee;}
-.test2{width:200px;height:70px;padding:10px;border:15px solid #999;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;background:#eee;margin-top:20px;}
+.container {
+	width: 300px;
+	border: 1px dashed #999;
+	margin-bottom: 20px;
+	padding: 10px;
+	background: #f9f9f9;
+}
+.box {
+	width: 100%; /* Target Width: matches container content area */
+	padding: 20px;
+	border: 10px solid #007bff;
+	background: #6cf;
+	color: #fff;
+	margin-bottom: 10px;
+}
+
+/* Standard Box Model */
+.content-box {
+	box-sizing: content-box;
+}
+
+/* Border Box Model (Recommended) */
+.border-box {
+	box-sizing: border-box;
+}
 </style>
 </head>
 <body>
-<div class="test">content-box</div>
-<div class="test2">border-box</div>
+<h1>box-sizing 示例</h1>
+
+<div class="container">
+	<p><strong>content-box (默认):</strong><br>Width = 100% + Padding + Border<br>(溢出容器)</p>
+	<div class="box content-box">Content Box</div>
+</div>
+
+<div class="container">
+	<p><strong>border-box:</strong><br>Width = 100% (包含Padding和Border)<br>(完美适应)</p>
+	<div class="box border-box">Border Box</div>
+</div>
 </body>
 </html>
 			</textarea>

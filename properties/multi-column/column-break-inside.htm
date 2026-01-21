@@ -120,6 +120,60 @@
 			</table>
 		</div>
 	</section>
+	<section id="example" class="g-mod g-attr">
+		<h2 class="tit">示例：</h2>
+		<div class="cont">
+			<textarea cols="90" rows="10">
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>column-break-inside_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+<style>
+.container {
+	column-count: 3;
+	column-gap: 20px;
+	column-rule: 1px solid #ccc;
+	height: 300px; /* Force breaking */
+	background: #f9f9f9;
+	padding: 10px;
+}
+.box {
+	background: #eee;
+	border: 1px solid #999;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.avoid {
+	column-break-inside: avoid;
+	background: #f06;
+	color: #fff;
+	height: 150px; /* Tall enough to potentially break */
+}
+</style>
+</head>
+<body>
+<h1>column-break-inside: avoid</h1>
+<div class="container">
+	<div class="box">Item 1</div>
+	<div class="box">Item 2</div>
+	<div class="box">Item 3</div>
+	<div class="box avoid">
+		<strong>Do Not Break Me!</strong><br>
+		This box should stay in one column.<br>
+		(column-break-inside: avoid)
+	</div>
+	<div class="box">Item 4</div>
+	<div class="box">Item 5</div>
+	<div class="box">Item 6</div>
+</div>
+</body>
+</html>
+			</textarea>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
+		</div>
+	</section>
 </section>
 <footer id="ft">
 	<aside id="rights" class="g-mod">

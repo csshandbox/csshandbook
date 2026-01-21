@@ -118,10 +118,10 @@
 			</table>
 		</div>
 	</section>
-	<section class="g-mod g-attr" id="example">
+	<section id="example" class="g-mod g-attr">
 		<h2 class="tit">示例：</h2>
 		<div class="cont">
-			<textarea rows="10" cols="90">
+			<textarea cols="90" rows="10">
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -129,19 +129,39 @@
 <title>page-break-inside_CSS参考手册_web前端开发参考手册系列</title>
 <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-p{page-break-inside:auto;}
+ul {
+	list-style: none;
+	padding: 0;
+}
+li {
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+	padding: 10px;
+	background: #eee;
+	/* 避免元素内部被分页截断 */
+	page-break-inside: avoid;
+}
 </style>
 </head>
 <body>
-<div>如果需要，在对象内部插入页分割符</div>
-<p>page-break-inside:auto</p>
-<p>page-break-inside:auto</p>
-<p>page-break-inside:auto</p>
-<p>page-break-inside:auto</p>
+<h1>page-break-inside: avoid</h1>
+<p>请在打印预览中查看效果。列表项不应被分页截断。</p>
+
+<ul>
+	<li>Item 1<br>Line 2<br>Line 3</li>
+	<li>Item 2<br>Line 2<br>Line 3</li>
+	<li>
+		Item 3 (Tall Item)<br>
+		Line 2<br>Line 3<br>Line 4<br>Line 5<br>
+		Line 6<br>Line 7<br>Line 8<br>Line 9<br>
+		(Should move to next page rather than split)
+	</li>
+	<li>Item 4<br>Line 2<br>Line 3</li>
+</ul>
 </body>
 </html>
 			</textarea>
-			<p><input type="button" class="g-btn g-btn-sure" value="运行"></p>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
 		</div>
 	</section>
 </section>

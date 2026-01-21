@@ -175,28 +175,58 @@
 <meta charset="utf-8" />
 <title>grid_CSS参考手册_web前端开发参考手册系列</title>
 <style>
-.grid {
+h1 { font-size: 16px; margin: 10px 0; }
+/* 基础网格 */
+.grid-basic {
 	display: grid;
-	grid: 100px 100px / 1fr 1fr;
-	grid-gap: 10px;
-	background-color: #eee;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	margin-bottom: 20px;
+	background: #eee;
 	padding: 10px;
 }
-.grid div {
-	background-color: #aaa;
+.grid-basic div {
+	background: #ccc;
 	padding: 20px;
 	text-align: center;
 	border: 1px solid #999;
 }
+
+/* 区域网格 */
+.grid-areas {
+	display: grid;
+	grid-template-areas:
+		"header header header"
+		"sidebar main main"
+		"footer footer footer";
+	grid-template-rows: 40px 100px 40px;
+	gap: 10px;
+	background: #eee;
+	padding: 10px;
+}
+.header { grid-area: header; background: #f99; padding: 10px; }
+.sidebar { grid-area: sidebar; background: #9f9; padding: 10px; }
+.main { grid-area: main; background: #99f; padding: 10px; }
+.footer { grid-area: footer; background: #ccc; padding: 10px; }
 </style>
 </head>
 <body>
-<h1>grid示例：</h1>
-<div class="grid">
+<h1>1. 基础网格 (repeat & gap)</h1>
+<div class="grid-basic">
 	<div>1</div>
 	<div>2</div>
 	<div>3</div>
 	<div>4</div>
+	<div>5</div>
+	<div>6</div>
+</div>
+
+<h1>2. 命名区域 (grid-template-areas)</h1>
+<div class="grid-areas">
+	<div class="header">Header</div>
+	<div class="sidebar">Sidebar</div>
+	<div class="main">Main Content</div>
+	<div class="footer">Footer</div>
 </div>
 </body>
 </html>

@@ -124,10 +124,10 @@
 			</table>
 		</div>
 	</section>
-	<section class="g-mod g-attr" id="example">
+	<section id="example" class="g-mod g-attr">
 		<h2 class="tit">示例：</h2>
 		<div class="cont">
-			<textarea rows="10" cols="90">
+			<textarea cols="90" rows="10">
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -135,19 +135,31 @@
 <title>page-break-before_CSS参考手册_web前端开发参考手册系列</title>
 <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-p{page-break-before:always;}
+h1 {
+	/* 强制在每个 h1 标题前换页 */
+	page-break-before: always;
+	border-bottom: 1px solid #000;
+}
+/* 避免第一个标题前换页 */
+h1:first-of-type {
+	page-break-before: auto;
+}
 </style>
 </head>
 <body>
-<div>在对象之前插入页分割符</div>
-<p>page-break-before:always</p>
-<p>page-break-before:always</p>
-<p>page-break-before:always</p>
-<p>page-break-before:always</p>
+<h1>Introduction</h1>
+<p>This is the first page.</p>
+<p>Please use Print Preview to see the page breaks.</p>
+
+<h1>Chapter 1</h1>
+<p>This content should start on a new page.</p>
+
+<h1>Chapter 2</h1>
+<p>This content should also start on a new page.</p>
 </body>
 </html>
 			</textarea>
-			<p><input type="button" class="g-btn g-btn-sure" value="运行"></p>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
 		</div>
 	</section>
 </section>

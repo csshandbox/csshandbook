@@ -128,6 +128,55 @@ p{page:rotated;page-break-before:left;}</code></pre></blockquote>
 			</table>
 		</div>
 	</section>
+	<section id="example" class="g-mod g-attr">
+		<h2 class="tit">示例：</h2>
+		<div class="cont">
+			<textarea cols="90" rows="10">
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>page_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+<style>
+/* 定义两种页面类型 */
+@page rotated { size: landscape; }
+@page normal { size: portrait; }
+
+/* 应用页面类型 */
+.chapter-normal {
+	page: normal;
+	background: #eee;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+.chapter-wide {
+	page: rotated;
+	background: #ccc;
+	padding: 20px;
+}
+</style>
+</head>
+<body>
+<h1>page 属性示例</h1>
+<p>注意：此属性效果需要在打印预览中查看。</p>
+
+<div class="chapter-normal">
+	<h2>Chapter 1 (Portrait)</h2>
+	<p>This section should be printed in portrait mode.</p>
+</div>
+
+<div class="chapter-wide">
+	<h2>Chapter 2 (Landscape)</h2>
+	<p>This section should be printed in landscape mode (if supported).</p>
+</div>
+</body>
+</html>
+			</textarea>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
+		</div>
+	</section>
+
 </section>
 <footer id="ft">
 	<aside id="rights" class="g-mod">

@@ -111,7 +111,26 @@
 	<section id="example" class="g-mod g-attr">
 		<h2 class="tit">示例：</h2>
 		<div class="cont">
-			<blockquote><pre><code>div{behavior:url(fly.htc) url(shy.htc);}</code></pre></blockquote>
+			<textarea cols="90" rows="10">
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+<meta charset="utf-8" />
+<title>behavior_CSS参考手册_web前端开发参考手册系列</title>
+<meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
+<style>
+div {
+	behavior: url(fly.htc) url(shy.htc);
+}
+</style>
+</head>
+<body>
+<p>注意：behavior 属性仅在 IE 浏览器中支持，且需要配合 .htc 文件使用。</p>
+<div>此元素将应用 fly.htc 和 shy.htc 中定义的行为（如果在 IE 中查看且文件存在）。</div>
+</body>
+</html>
+			</textarea>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
 		</div>
 	</section>
 </section>

@@ -124,10 +124,10 @@
 			</table>
 		</div>
 	</section>
-	<section class="g-mod g-attr" id="example">
+	<section id="example" class="g-mod g-attr">
 		<h2 class="tit">示例：</h2>
 		<div class="cont">
-			<textarea rows="10" cols="90">
+			<textarea cols="90" rows="10">
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -135,19 +135,43 @@
 <title>page-break-after_CSS参考手册_web前端开发参考手册系列</title>
 <meta name="author" content="Joy Du(飘零雾雨), dooyoe@gmail.com, www.doyoe.com" />
 <style>
-p{page-break-after:always;}
+.chapter {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin-bottom: 20px;
+	background: #f9f9f9;
+	/* 强制在每一章后换页 */
+	page-break-after: always;
+}
+@media print {
+	.chapter { background: none; border: none; }
+}
 </style>
 </head>
 <body>
-<div>在对象之后插入页分割符</div>
-<p>page-break-after:always</p>
-<p>page-break-after:always</p>
-<p>page-break-after:always</p>
-<p>page-break-after:always</p>
+<h1>page-break-after: always</h1>
+<p>请使用打印预览 (Ctrl/Cmd + P) 查看效果。</p>
+
+<div class="chapter">
+	<h2>Chapter 1</h2>
+	<p>Content for chapter 1...</p>
+	<p>(Should break page after this block)</p>
+</div>
+
+<div class="chapter">
+	<h2>Chapter 2</h2>
+	<p>Content for chapter 2...</p>
+	<p>(Should break page after this block)</p>
+</div>
+
+<div class="chapter">
+	<h2>Chapter 3</h2>
+	<p>Content for chapter 3...</p>
+</div>
 </body>
 </html>
 			</textarea>
-			<p><input type="button" class="g-btn g-btn-sure" value="运行"></p>
+			<p><input type="button" value="运行" class="g-btn g-btn-sure" /></p>
 		</div>
 	</section>
 </section>
